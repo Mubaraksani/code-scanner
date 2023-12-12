@@ -1,0 +1,57 @@
+<div class="app-modal-body">
+   <div class="container text-center">
+      <div class="row">
+         <div class="col-md-6 mx-auto">
+            <div class="card">
+               <div class="card-header">
+                  <h5 class="card-title">QR Code Scanner</h5>
+               </div>
+               <div class="card-body">
+                  <ng-container>
+                     <!-- <img src="" alt="Selected Image" id="selectedImage"  width="100%"/> -->
+                     <zxing-scanner #scanner start="true" (scanSuccess)="onCodeResult($event)"
+                        (permissionResponse)="onHasPermission($event)" [device]="deviceCurrent" [tryHarder]="tryHarder"
+                        (deviceChange)="onDeviceChange($event)" (camerasFound)="onCamerasFound($event)">
+                     </zxing-scanner>
+                     <!-- Display error message if applicable -->
+                     <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+                        {{ errorMessage }}
+                     </div>
+                  </ng-container>
+                  <section class="results mt-3" *ngIf="qrResultString">
+                     <strong>{{ qrResultString }}</strong>
+                  </section>
+                  <!-- Option to retry scanning -->
+                  <button *ngIf="errorMessage" class="btn btn-primary mt-3" (click)="retryScanning()">Retry Scanning</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <ng-container *ngIf="hasPermission == false">
+         <div class="row mt-3">
+            <div class="col-md-6 mx-auto">
+               <div class="alert alert-danger">
+                  You denied the camera permission, we can't scan anything without it. 😪
+               </div>
+            </div>
+         </div>
+      </ng-container>
+      <div class="row mt-3">
+         <div class="col-md-6 mx-auto">
+            <div class="card">
+               <div class="card-header">
+                  <h5 class="card-title">Upload QR Code Image</h5>
+               </div>
+               <div class="card-body">
+                  <input type="file" class="form-control" (change)="onImageselected($event)" accept="image/*">
+                  <!-- <qrcode [qrdata]="qrcode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
+                  <div class="">
+                     <!-- <qrcode [qrdata]="'dataToString'" [size]="300" [level]="'M'"></qrcode> -->
+                     <qr-code [value]="dataToString" [size]="300" [width]="256" [level]="'M'" style="display: inline-block; height: 50px; width: 50px; background-color: white;"></qr-code>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
