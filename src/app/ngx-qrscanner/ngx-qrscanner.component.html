@@ -22,7 +22,11 @@
    </div> -->
 
    <!-- ngx-scanner-qrcode -->
-   <ngx-scanner-qrcode #action="scanner" [isBeep]="true" [config]="config" (event)="onEvent($event, action)"></ngx-scanner-qrcode>
+   <div class="row">
+      <div class="col-md-6 col-lg-6 mx-auto">
+         <ngx-scanner-qrcode #action="scanner" [isBeep]="true" [config]="config" (event)="onEvent($event, action)"></ngx-scanner-qrcode>
+      </div>
+   </div>
 
    <!-- data  -->
    <!-- <p class="data">{{ (action.data | async | json) }}</p> -->
